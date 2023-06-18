@@ -1,2 +1,48 @@
 # fork
 dev-test-exercise
+import React, { useState } from 'react';
+
+const LoginPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState(false);
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (!/\S+@\S+\.\S+/.test(e.target.value)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!emailError) {
+      console.log(`Email: ${email}, Password: ${password}`);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Email:
+        <input type="text" value={email} onChange={handleEmailChange} style={{ borderColor: emailError ? 'red' : '' }} />
+        {emailError && <div style={{ color: 'red' }}>Invalid email</div>}
+      </label>
+      <br />
+      <label>
+        Password:
+        <input type="password" value={password} onChange={handlePasswordChange} />
+      </label>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default LoginPage;
